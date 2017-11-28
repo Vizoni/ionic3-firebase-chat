@@ -21,7 +21,8 @@ export abstract class baseComponent implements OnInit{
     ) {}
 
     ngOnInit(): void {
-        this.navCtrl = this.app.getActiveNav(); // recebe o navController usado
+        // this.navCtrl = this.app.getActiveNav(); // recebe o navController usado
+        this.navCtrl = this.app.getActiveNavs()[0];
     }
 
     onLogOut(): void {

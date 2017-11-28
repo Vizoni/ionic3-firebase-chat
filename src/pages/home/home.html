@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-navbar>
+  <!-- <ion-navbar>
     <ion-title>
       Ionic Blank
-    </ion-title>
+    </ion-title> 
   </ion-navbar>
+-->
+<custom-logged-header [title]="view"></custom-logged-header>
 
   <ion-toolbar>
     <ion-segment [(ngModel)]="view"> <!-- esse ng model vai mostrar qual das 2 abas vai mostrar-->
