@@ -10,6 +10,7 @@ import { AngularFireModule, FirebaseAppConfig } from 'angularfire2'; //importa o
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
 import { SignupPage } from '../pages/signup/signup';
+import { UserService } from '../providers/user/user.service';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -41,7 +42,8 @@ const firebaseAppConfig: FirebaseAppConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserService
   ]
 })
 export class AppModule {}
