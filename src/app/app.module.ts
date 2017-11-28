@@ -11,6 +11,7 @@ import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
 import { SignupPage } from '../pages/signup/signup';
 import { UserService } from '../providers/user/user.service';
+import { AuthService } from '../providers/auth/auth.service';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -40,10 +41,11 @@ const firebaseAppConfig: FirebaseAppConfig = {
     SignupPage
   ],
   providers: [
+    AuthService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserService
+    UserService,
   ]
 })
 export class AppModule {}
