@@ -38,16 +38,23 @@ export class SignupPage {
   onSubmit(): void {
 
     // para pegar os atributos do formulario: this.signupForm.value (retorna o objeto inteiro)
-    let user: User = this.signupForm.value; 
+    // let user: User = this.signupForm.value; não é mais do tipo User pq tirou a senha do model
+
+    let formUser = this.signupForm.value;
 
     this.authService.createAuthUser( {
       // cria o objeto de usuario para criar um usuário de autenticação no service Auth
-      email: user.email,
-      password: user.password,
+      email: formUser.email,
+      password: formUser.password,
     }).then((authState: FirebaseAuthState) => {
         //depois de cadastrar o usuário de autenticação:
-        
-        this.userService.create(this.signupForm.value)
+        // pra não ter que passar o atributo PASSWORD do objeto formUser, tem q deletar este atributo
+        delete formUser.password;
+
+        // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
+        formUser.uid = authState.auth.uid;
+
+        this.userService.create(formUser)
         .then( () => {  // o método retorna uma promise vazia
           console.log("Usuario Cadastrado");        
         });

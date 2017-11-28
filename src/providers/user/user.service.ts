@@ -19,11 +19,12 @@ export class UserService {
 
   create(user: User): firebase.Promise<void> { 
     // A função create tem o parametro user do tipo User (pasta models) e retorna uma firebase.promise VAZIA (void)
-    /*
-    return this.af.database.list(`/users`)  // lista os usuarios (nó 'users')
-      .push(user);  // adiciona o parametro passado (objeto do formulario) na lista dos nós '/users'
-      */
-    return this.users.push(user); // o atributo users é uma listagem do nó '/users'. O método push é pra adicionar
+    // return this.users.push(user); // o atributo users é uma listagem do nó '/users'. O método push é pra adicionar
+
+    // Se não existir o caminho (do parametro abaixo), ele vai setar (.set()) o usuário nesse caminho (pra não duplicar)
+    return this.af.database.object(`/users/${user.uid}`)
+      .set(user);
+
   }
 
 
