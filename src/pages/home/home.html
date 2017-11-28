@@ -4,13 +4,34 @@
       Ionic Blank
     </ion-title>
   </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="view"> <!-- esse ng model vai mostrar qual das 2 abas vai mostrar-->
+      <ion-segment-button value="chats">
+        Chats
+      </ion-segment-button>
+      <ion-segment-button value="users">
+        Users
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content padding>
-  <h4> Usuários Cadastrados: </h4>
-  <ion-list no-lines>
-    <!-- o pipe ( | async) é para esperar retornar a resposta do observable do servidor  -->
-    <button ion-item *ngFor="let user of users | async" (click)="onChatCreate(user)"> {{user.name}} </button> 
-  </ion-list>
+
+  <div [ngSwitch]="view">  <!-- o ng switch vai ficar ouvindo o ng model VIEW -->
+
+    <ion-list no-lines *ngSwitchCase=" 'chats' "> <!-- se o view for o CHATS -->
+      <ion-item>Chats</ion-item>
+    </ion-list>
+    <ion-list no-lines *ngSwitchCase=" 'users' "> <!-- se o view for o USERS -->
+      <h4> Usuários Cadastrados: </h4> 
+      <!-- o pipe ( | async) é para esperar retornar a resposta do observable do servidor  -->
+      <button ion-item *ngFor="let user of users | async" (click)="onChatCreate(user)"> {{user.name}} </button> 
+    </ion-list>
+
+  </div>
+  
   <button ion-button block (click)="onSignup()">Sign Up</button>
 </ion-content>
