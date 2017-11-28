@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './../../providers/user/user.service';
+import { AuthService } from '../../providers/auth/auth.service';
+import { User } from '../../models/user.model';
+import { FirebaseAuthState } from 'angularfire2';
 
 @IonicPage()
 @Component({
@@ -14,6 +17,7 @@ export class SignupPage {
   signupForm: FormGroup; // atributo signUpForm ($scope.signUpForm no angular 1) do tipo FormGroup;
 
   constructor( 
+    public authService: AuthService,
     public formBuilder: FormBuilder,    // para trabalhar com formulário
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,11 +36,24 @@ export class SignupPage {
     }
 
   onSubmit(): void {
+
     // para pegar os atributos do formulario: this.signupForm.value (retorna o objeto inteiro)
-    this.userService.create(this.signupForm.value)
-      .then( () => {  // o método retorna uma promise vazia
-        console.log("usuario cadastrado");        
-      }); 
+    let user: User = this.signupForm.value; 
+
+    this.authService.createAuthUser( {
+      // cria o objeto de usuario para criar um usuário de autenticação no service Auth
+      email: user.email,
+      password: user.password,
+    }).then((authState: FirebaseAuthState) => {
+        //depois de cadastrar o usuário de autenticação:
+        
+        this.userService.create(this.signupForm.value)
+        .then( () => {  // o método retorna uma promise vazia
+          console.log("Usuario Cadastrado");        
+        });
+
+    })
+
   }
 
 }
