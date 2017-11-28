@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from './../../providers/user/user.service';
 
 @IonicPage()
 @Component({
@@ -12,10 +13,11 @@ export class SignupPage {
 
   signupForm: FormGroup; // atributo signUpForm ($scope.signUpForm no angular 1) do tipo FormGroup;
 
-  constructor(
+  constructor( 
     public formBuilder: FormBuilder,    // para trabalhar com formulário
     public navCtrl: NavController,
     public navParams: NavParams,
+    public userService: UserService
     ) {
       // variavel com a expressão regular de validação de e-mail
       let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;    
@@ -30,7 +32,11 @@ export class SignupPage {
     }
 
   onSubmit(): void {
-    console.log("form submitted");
+    // para pegar os atributos do formulario: this.signupForm.value (retorna o objeto inteiro)
+    this.userService.create(this.signupForm.value)
+      .then( () => {  // o método retorna uma promise vazia
+        console.log("usuario cadastrado");        
+      }); 
   }
 
 }

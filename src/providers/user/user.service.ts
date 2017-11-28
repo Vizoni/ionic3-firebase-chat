@@ -15,8 +15,8 @@ export class UserService {
 
   create(user: User): firebase.Promise<void> { 
     // A função create tem o parametro user do tipo User (pasta models) e retorna uma firebase.promise VAZIA (void)
-    return this.af.database.list(`/users`)  // lista os usuarios (tabela users)
-      .push(user);  // adiciona o parametro passado (objeto do formulario) na lista /users
+    return this.af.database.list(`/users`)  // lista os usuarios (nó 'users')
+      .push(user);  // adiciona o parametro passado (objeto do formulario) na lista dos nós '/users'
   }
 
 
