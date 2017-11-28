@@ -30,4 +30,8 @@ export class AuthService extends BaseService{
       .catch(this.handlePromiseError);
   }
 
+  logOut(): Promise<void>{
+    return this.auth.logout();
+  }
+
 }
