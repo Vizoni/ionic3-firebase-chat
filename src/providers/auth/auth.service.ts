@@ -12,7 +12,6 @@ export class AuthService extends BaseService{
     public http: Http
   ) {
     super();  // chama o construtor da classe mãe (baseService)
-    console.log('Hello AuthProvider Provider');
   }
 
   createAuthUser(user: {email: string, password: string}): firebase.Promise<FirebaseAuthState> {
