@@ -12,6 +12,8 @@ import { AuthService } from '../../providers/auth/auth.service';
 import { UserService } from './../../providers/user/user.service';
 import { User } from '../../models/user.model';
 
+import { HomePage } from './../home/home';
+
 @IonicPage()
 @Component({
   selector: 'page-signup',
@@ -68,9 +70,10 @@ export class SignupPage {
             // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
             formUser.uid = authState.auth.uid;
 
-            this.userService.create(formUser)
+            this.userService.create(formUser) // cria usuario (nó no database)
               .then(() => {  // o método retorna uma promise vazia
                 loading.dismiss();
+                this.navCtrl.setRoot(HomePage);
               }).catch((error: any) => {
                 loading.dismiss();
                 this.showAlert(error);
