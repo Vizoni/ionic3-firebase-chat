@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Sign Up</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1 text-center>
+    <ion-icon name="person-add" color="primary" class="auth-icon"></ion-icon>
+  </h1>
+
+  <!-- Qndo clicar no botão create account, vai ativar o evento 'ngSubmit' do form -->
+  <!-- Qndo é () é event bind e qndo é [] é property bind -->
+  <!-- formControlName é o NG-MODEL do angular 1 (nome usado no constructor) -->
+  <!-- Para garantir que não vai ter um comportamento inesperado, chama o $event.preventDefault() -->
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+  
+    <ion-item>
+      <ion-icon name="person" item-left></ion-icon>
+      <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="at" item-left></ion-icon>
+      <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="mail" item-left></ion-icon>
+      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="lock" item-left></ion-icon>
+      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+    </ion-item>
+    <br>
+
+    <button ion-button full type="submit" [disabled]="signupForm.invalid">Create Account</button>
+    <!-- se o signupForm for inválido, vai retornar TRUE e DESABILITAR o botão -->
+    
+  </form>
+
+</ion-content>

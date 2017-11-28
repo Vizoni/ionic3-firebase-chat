@@ -1,12 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { AngularFireModule, FirebaseAppConfig } from 'angularfire2'; //importa o firebase app config
+
+import { HomePage } from '../pages/home/home';
+import { MyApp } from './app.component';
+import { SignupPage } from '../pages/signup/signup';
+import { UserService } from '../providers/user/user.service';
+import { AuthService } from '../providers/auth/auth.service';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -19,23 +24,28 @@ const firebaseAppConfig: FirebaseAppConfig = {
 
 @NgModule({
   declarations: [
+    HomePage,
     MyApp,
-    HomePage
+    SignupPage
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseAppConfig),
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    HomePage,
     MyApp,
-    HomePage
+    SignupPage
   ],
   providers: [
+    AuthService,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserService,
   ]
 })
 export class AppModule {}
