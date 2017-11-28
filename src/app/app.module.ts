@@ -7,13 +7,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig } from 'angularfire2'; //importa o firebase app config
 
+import { AuthService } from '../providers/auth/auth.service';
+import { CapitalizePipe } from '../pipes/capitalize/capitalize';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
-
-import { AuthService } from '../providers/auth/auth.service';
 import { UserService } from '../providers/user/user.service';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
@@ -33,6 +33,7 @@ const firebaseAuthConfig = {
 
 @NgModule({
   declarations: [
+    CapitalizePipe,
     CustomLoggedHeaderComponent,
     HomePage,
     MyApp,
