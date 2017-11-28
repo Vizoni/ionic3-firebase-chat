@@ -1,4 +1,3 @@
-import { firebaseAuthConfig, FirebaseAuthState, AuthProviders } from 'angularfire2/auth';
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, Loading, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -74,5 +73,19 @@ export class SigninPage {
     }).present();
   }
 
+  onHomePage(): void {
+    this.navCtrl.push(HomePage)
+      .then((hasAccess: boolean) => {
+        console.log("autorizado", hasAccess);
+      })
+      .catch(err => {
+        console.error("nao autorizado",err);
+      });
+  }
+
+  onLogOut(): void {
+    this.authService.logOut();
+    console.log("deslogou")
+  }
 
 }

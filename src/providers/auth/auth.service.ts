@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth, FirebaseAuthState, firebaseAuthConfig } from 'angularfire2/auth';
 import { BaseService } from '../base/base.service';
-import { FirebaseError } from 'firebase';
+import { Promise } from 'firebase';
 
 @Injectable()
 export class AuthService extends BaseService{
@@ -32,6 +32,23 @@ export class AuthService extends BaseService{
 
   logOut(): Promise<void>{
     return this.auth.logout();
+  }
+
+  get isAuthenticated(): Promise<boolean> { //evento que ocorre ANTES de acessar esse método (qndo chama this.authService.isAuthenticated)
+    return new Promise((resolve, reject) => {
+      this.auth
+      .first()  // pega apenas a primeira alteração
+      .subscribe((authState: FirebaseAuthState) => {
+        /*
+        if(authState) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
+        */
+        (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
+      })
+    })
   }
 
 }
