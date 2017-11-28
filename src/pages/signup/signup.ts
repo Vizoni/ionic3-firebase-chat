@@ -49,30 +49,44 @@ export class SignupPage {
 
     let formUser = this.signupForm.value;
 
-    this.authService.createAuthUser({
-      // cria o objeto de usuario para criar um usuário de autenticação no service Auth
-      email: formUser.email,
-      password: formUser.password,
-    }).then((authState: FirebaseAuthState) => {
-      //depois de cadastrar o usuário de autenticação:
-      // pra não ter que passar o atributo PASSWORD do objeto formUser, tem q deletar este atributo
-      delete formUser.password;
+    let username: string = formUser.username;
 
-      // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
-      formUser.uid = authState.auth.uid;
+    this.userService.userExists(username) // retorna um observable
+      .first()  // recebe o primeiro valor recebido pelo observable, o resto será ignorado
+      .subscribe((userExists: boolean) => { // se inscreve (subscribe) para receber alterações
+        if (!userExists) {  // se o usuário não existir, cadastra um novo
 
-      this.userService.create(formUser)
-        .then(() => {  // o método retorna uma promise vazia
+          this.authService.createAuthUser({
+            // cria o objeto de usuario para criar um usuário de autenticação no service Auth
+            email: formUser.email,
+            password: formUser.password,
+          }).then((authState: FirebaseAuthState) => {
+            //depois de cadastrar o usuário de autenticação:
+            // pra não ter que passar o atributo PASSWORD do objeto formUser, tem q deletar este atributo
+            delete formUser.password;
+
+            // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
+            formUser.uid = authState.auth.uid;
+
+            this.userService.create(formUser)
+              .then(() => {  // o método retorna uma promise vazia
+                loading.dismiss();
+              }).catch((error: any) => {
+                loading.dismiss();
+                this.showAlert(error);
+              });
+
+          }).catch((error: any) => {
+            loading.dismiss();
+            this.showAlert(error);
+          })
+
+        } else {
+          this.showAlert("Username already in use! Pick another one.");
           loading.dismiss();
-        }).catch((error: any) => {
-          loading.dismiss();
-          this.showAlert(error);
-        });
+        }
+      });
 
-    }).catch((error: any) => {
-      loading.dismiss();
-      this.showAlert(error);
-    })
 
   }
 

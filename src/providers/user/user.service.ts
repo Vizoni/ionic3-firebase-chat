@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { User } from '../../models/user.model'; // importa a classe de User que compõe o formulário
 import { BaseService } from '../base/base.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService extends BaseService{
@@ -28,6 +29,19 @@ export class UserService extends BaseService{
       .set(user)
       .catch(this.handlePromiseError);
 
+  }
+
+  userExists(username: string): Observable<boolean> {
+    return this.af.database.list(`/users`, {
+      query: {
+        orderByChild: 'username', // ordena pelo atributo 'username' de cada nó
+        equalTo: username // que seja igual ao username passado
+      }
+    }).map((users: User[]) => { // o retorno é um array do tipo User
+      return users.length > 0;  // se o array de users for maior q 0, retorna TRUE, se não, FALSE
+    }).catch(this.handleObservableError); // tratamento de erro com o método handleObservableError do BaseService
+    
+    // return null;
   }
 
 
