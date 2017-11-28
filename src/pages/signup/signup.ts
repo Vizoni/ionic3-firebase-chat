@@ -64,16 +64,14 @@ export class SignupPage {
       this.userService.create(formUser)
         .then(() => {  // o método retorna uma promise vazia
           loading.dismiss();
-        }).catch((er: Error) => {
-          console.warn(er);
+        }).catch((error: any) => {
           loading.dismiss();
-          this.showAlert(er.message);
+          this.showAlert(error);
         });
 
-    }).catch((er: Error) => {
-      console.warn(er);
+    }).catch((error: any) => {
       loading.dismiss();
-      this.showAlert(er.message);
+      this.showAlert(error);
     })
 
   }
