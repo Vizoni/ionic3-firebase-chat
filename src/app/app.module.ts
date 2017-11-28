@@ -5,7 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { AngularFireModule, FirebaseAppConfig } from 'angularfire2'; //importa o firebase app config
+import { AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig } from 'angularfire2'; //importa o firebase app config
 
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
@@ -14,6 +14,7 @@ import { SigninPage } from '../pages/signin/signin';
 
 import { AuthService } from '../providers/auth/auth.service';
 import { UserService } from '../providers/user/user.service';
+// import { AuthMethods } from 'angularfire2/auth';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -24,6 +25,12 @@ const firebaseAppConfig: FirebaseAppConfig = {
   messagingSenderId: "717491479259"
 };
 
+
+const firebaseAuthConfig = {
+  provider: AuthProviders.Custom,
+  method: AuthMethods.Password
+}
+
 @NgModule({
   declarations: [
     HomePage,
@@ -32,7 +39,7 @@ const firebaseAppConfig: FirebaseAppConfig = {
     SignupPage
   ],
   imports: [
-    AngularFireModule.initializeApp(firebaseAppConfig),
+    AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig),
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp)
