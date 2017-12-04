@@ -39,13 +39,6 @@ export class AuthService extends BaseService{
       this.auth
       .first()  // pega apenas a primeira alteração
       .subscribe((authState: FirebaseAuthState) => {
-        /*
-        if(authState) {
-          resolve(true);
-        } else {
-          reject(false);
-        }
-        */
         (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
       })
     })
