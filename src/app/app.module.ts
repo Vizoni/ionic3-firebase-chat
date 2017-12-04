@@ -10,6 +10,7 @@ import { AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig } from
 import { AuthService } from '../providers/auth/auth.service';
 import { CapitalizePipe } from '../pipes/capitalize/capitalize';
 import { ChatPage } from '../pages/chat/chat';
+import { ChatService } from '../providers/chat/chat.service';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
@@ -58,6 +59,7 @@ const firebaseAuthConfig = {
   ],
   providers: [
     AuthService,
+    ChatService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
