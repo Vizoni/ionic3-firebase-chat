@@ -1,20 +1,40 @@
-import { Chat } from './../../models/chat.model';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseAuthState, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { BaseService } from '../base/base.service';
 import { Chat } from '../../models/chat.model';
 
 @Injectable()
 export class ChatService extends BaseService {
 
+  chats: FirebaseListObservable<Chat[]>
+
   constructor(
     public af: AngularFire,
     public http: Http
   ) {
     super();
+    this.setChats();
+  }
+  
+  private setChats(): void {
+    this.af.auth
+      .subscribe((authState: FirebaseAuthState) => {
+        // se usuario estiver logado
+        if(authState) {
+          // auth é o NÓ do usuario (se houver)
+          this.chat = <FirebaseListObservable<Chat[]>>this.af.database.list(`/chats/${authState.auth.uid}`, {
+            query: {
+              orderByChild: 'timeStamp' //retorna em ordem CRESCENTE (tem q ser decrescente, ou seja, a mensagem mais recente)
+            }
+          }).map((chats: Chat[]) => {
+            return chats.reverse(); // inverte a ordem da array
+          }).catch(this.handleObservableError);
+
+        }
+      })
   }
 
   create(chat: Chat, userId1: string, userId2: string): firebase.Promise<void> {
