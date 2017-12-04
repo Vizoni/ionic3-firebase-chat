@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseAuthState } from 'angularfire2/auth';
 import { User } from '../../models/user.model'; // importa a classe de User que compõe o formulário
 import { BaseService } from '../base/base.service';
 import { Observable } from 'rxjs';
+// import { FirebaseObjectObservable } from 'angularfire2/database';
 
 @Injectable()
 export class UserService extends BaseService{
 
   users: FirebaseListObservable<User[]>;  // atributo array de usuarios do tipo (model) User
+  currentUser: FirebaseObjectObservable<User>;
 
   constructor(
     public af: AngularFire, // injeta o angular fire pra poder mexer com o real time
@@ -18,6 +21,17 @@ export class UserService extends BaseService{
   ) {
     super(); // chama o construtor da classe mãe (baseService)
     this.users = this.af.database.list(`/users`);
+    this.listenAuthState();
+  }
+
+  private listenAuthState(): void { // método privado
+    this.af.auth.subscribe((authState: FirebaseAuthState) => {
+      if(authState) { // se existir um usuário logado
+        console.log(authState.auth.uid)
+        this.currentUser = this.af.database.object('/users/${authState.auth.uid}');
+        // atribui o usuario logado ao current user
+      }
+    });
   }
 
   create(user: User, userUniqueId: string): firebase.Promise<void> { 
