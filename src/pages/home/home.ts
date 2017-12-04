@@ -42,7 +42,7 @@ export class HomePage {
   onChatCreate(user: User): void {
     console.log('user:',user);
     this.navCtrl.push(ChatPage, {
-      recipientUser: user      
+      recipientUser: user      // envia o parametro que é o destinatário da mensagem pra pagina ChatPage
     });
   }
 
