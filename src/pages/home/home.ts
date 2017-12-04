@@ -4,6 +4,7 @@ import { NavController } from 'ionic-angular';
 import { FirebaseListObservable } from 'angularfire2/database';
 
 import { AuthService } from '../../providers/auth/auth.service';
+import { ChatPage } from './../chat/chat';
 import { SignupPage } from '../signup/signup';
 import { User } from '../../models/user.model';
 import { UserService } from './../../providers/user/user.service';
@@ -31,7 +32,6 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.users = this.userService.users;  // o atributo users dessa página é o mesmo q o atributo do user service   
-    console.log("usuarios cadastrados LISTADOS!", this.users);
   }
 
   onSignup(): void {
@@ -40,6 +40,9 @@ export class HomePage {
 
   onChatCreate(user: User): void {
     console.log('user:',user);
+    this.navCtrl.push(ChatPage, {
+      recipientUser: user      
+    });
   }
 
   

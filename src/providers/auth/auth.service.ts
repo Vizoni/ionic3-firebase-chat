@@ -3,7 +3,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth, FirebaseAuthState, firebaseAuthConfig } from 'angularfire2/auth';
 import { BaseService } from '../base/base.service';
-import { Promise } from 'firebase';
+// import { Promise } from 'firebase';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService extends BaseService{
@@ -39,7 +40,8 @@ export class AuthService extends BaseService{
       this.auth
       .first()  // pega apenas a primeira alteração
       .subscribe((authState: FirebaseAuthState) => {
-        (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
+        // (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
+        (authState) ? resolve(true) : reject(Error);  // se o authState for verdadeiro, retorna true
       })
     })
   }

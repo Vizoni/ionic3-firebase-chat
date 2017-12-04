@@ -9,6 +9,7 @@ import { AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig } from
 
 import { AuthService } from '../providers/auth/auth.service';
 import { CapitalizePipe } from '../pipes/capitalize/capitalize';
+import { ChatPage } from '../pages/chat/chat';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
@@ -34,6 +35,7 @@ const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     CapitalizePipe,
+    ChatPage,
     CustomLoggedHeaderComponent,
     HomePage,
     MyApp,
@@ -48,6 +50,7 @@ const firebaseAuthConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    ChatPage,
     HomePage,
     MyApp,
     SigninPage,
