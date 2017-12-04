@@ -25,10 +25,8 @@
   <div [ngSwitch]="view">  <!-- o ng switch vai ficar ouvindo o ng model VIEW -->
 
     <ion-list no-lines *ngSwitchCase=" 'chats' "> <!-- se o view for o CHATS -->
-      <ion-item>Chats</ion-item>
     </ion-list>
     <ion-list no-lines *ngSwitchCase=" 'users' "> <!-- se o view for o USERS -->
-      <h4> Usuários Cadastrados: </h4> 
       <!-- o pipe ( | async) é para esperar retornar a resposta do observable do servidor  -->
       <button ion-item *ngFor="let user of users | async" (click)="onChatCreate(user)"> {{user.name}} </button> 
     </ion-list>

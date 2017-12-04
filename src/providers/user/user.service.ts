@@ -20,18 +20,29 @@ export class UserService extends BaseService{
     public http: Http,
   ) {
     super(); // chama o construtor da classe mãe (baseService)
-    this.users = this.af.database.list(`/users`);
+    // this.users = this.af.database.list(`/users`);
     this.listenAuthState();
   }
 
   private listenAuthState(): void { // método privado
     this.af.auth.subscribe((authState: FirebaseAuthState) => {
       if(authState) { // se existir um usuário logado
-        console.log(authState.auth.uid)
-        this.currentUser = this.af.database.object('/users/${authState.auth.uid}');
+        this.currentUser = this.af.database.object(`/users/${authState.auth.uid}`);
+        this.setUsers(authState.auth.uid)
         // atribui o usuario logado ao current user
       }
     });
+  }
+
+  private setUsers(uidToExclude: string): void {
+    this.users = <FireBaseListObservable<User[]>> this.af.database.list(`/users`, {
+      query: {
+        orderByChild: 'name'    //orderna pelo nome
+      }
+    }).map((users: User[]) => { //filtra
+      return users.filter((user: User) => user.$key !== uidToExclude);
+      // só vai pegar os usuários que NÃO tem o mesmo id do usuario atual (uid to exclude0)
+    })
   }
 
   create(user: User, userUniqueId: string): firebase.Promise<void> { 

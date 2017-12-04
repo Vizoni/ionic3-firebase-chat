@@ -31,7 +31,8 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.users = this.userService.users;  // o atributo users dessa página é o mesmo q o atributo do user service   
+    this.users = this.userService.users; 
+    // o atributo users dessa página é o mesmo q o atributo do user service   
   }
 
   onSignup(): void {

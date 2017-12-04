@@ -6,7 +6,8 @@ export class User {
         public email: string,
         // public password: string,
         // public uid: string, // como não precisamos conhecer a senha do usuário, substituimos a senha pelo ID
-        public photo: string
+        public photo: string,
+        public $key: string
     ) {};
 
 }
