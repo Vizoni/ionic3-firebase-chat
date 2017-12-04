@@ -35,7 +35,7 @@ export class UserService extends BaseService{
   }
 
   private setUsers(uidToExclude: string): void {
-    this.users = <FireBaseListObservable<User[]>> this.af.database.list(`/users`, {
+    this.users = <FirebaseListObservable<User[]>> this.af.database.list(`/users`, {
       query: {
         orderByChild: 'name'    //orderna pelo nome
       }
