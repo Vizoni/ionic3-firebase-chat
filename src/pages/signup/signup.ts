@@ -68,9 +68,11 @@ export class SignupPage {
             delete formUser.password;
 
             // tem q adicionar o uid (id Único) criado na criação de usuário de autenticação (funçao createAuthUser)
-            formUser.uid = authState.auth.uid;
+            // formUser.uid = authState.auth.uid;
 
-            this.userService.create(formUser) // cria usuario (nó no database)
+            let userUniqueId: string = authState.auth.uid;
+
+            this.userService.create(formUser, userUniqueId) // cria usuario (nó no database)
               .then(() => {  // o método retorna uma promise vazia
                 loading.dismiss();
                 this.navCtrl.setRoot(HomePage);

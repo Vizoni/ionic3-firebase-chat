@@ -34,18 +34,11 @@ export class AuthService extends BaseService{
     return this.auth.logout();
   }
 
-  get isAuthenticated(): Promise<boolean> { //evento que ocorre ANTES de acessar esse método (qndo chama this.authService.isAuthenticated)
+  get authenticated(): Promise<boolean> { //evento que ocorre ANTES de acessar esse método (qndo chama this.authService.isAuthenticated)
     return new Promise((resolve, reject) => {
       this.auth
       .first()  // pega apenas a primeira alteração
       .subscribe((authState: FirebaseAuthState) => {
-        /*
-        if(authState) {
-          resolve(true);
-        } else {
-          reject(false);
-        }
-        */
         (authState) ? resolve(true) : reject(false);  // se o authState for verdadeiro, retorna true
       })
     })

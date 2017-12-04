@@ -20,12 +20,12 @@ export class UserService extends BaseService{
     this.users = this.af.database.list(`/users`);
   }
 
-  create(user: User): firebase.Promise<void> { 
+  create(user: User, userUniqueId: string): firebase.Promise<void> { 
     // A função create tem o parametro user do tipo User (pasta models) e retorna uma firebase.promise VAZIA (void)
     // return this.users.push(user); // o atributo users é uma listagem do nó '/users'. O método push é pra adicionar
 
     // Se não existir o caminho (do parametro abaixo), ele vai setar (.set()) o usuário nesse caminho (pra não duplicar)
-    return this.af.database.object(`/users/${user.uid}`)
+    return this.af.database.object(`/users/${userUniqueId}`)
       .set(user)
       .catch(this.handlePromiseError);
 

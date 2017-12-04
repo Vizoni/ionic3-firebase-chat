@@ -15,6 +15,7 @@ import { UserService } from './../../providers/user/user.service';
 export class HomePage {
 
   users: FirebaseListObservable<User[]>;  // atributo users é uma array de Users do tipo Observable do FireBase
+  view: string = 'chats';
 
   constructor(
     public authService: AuthService,
@@ -25,7 +26,7 @@ export class HomePage {
   }
 
   ionViewCanEnter(): Promise<boolean> {
-    return this.authService.isAuthenticated;
+    return this.authService.authenticated;
   }
 
   ionViewDidLoad() {
