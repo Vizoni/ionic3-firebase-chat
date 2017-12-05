@@ -9,9 +9,12 @@ import { AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig } from
 
 import { AuthService } from '../providers/auth/auth.service';
 import { CapitalizePipe } from '../pipes/capitalize/capitalize';
+import { ChatPage } from '../pages/chat/chat';
+import { ChatService } from '../providers/chat/chat.service';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
+import { MessageService } from '../providers/message/message.service';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
 import { UserService } from '../providers/user/user.service';
@@ -34,6 +37,7 @@ const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     CapitalizePipe,
+    ChatPage,
     CustomLoggedHeaderComponent,
     HomePage,
     MyApp,
@@ -48,6 +52,7 @@ const firebaseAuthConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    ChatPage,
     HomePage,
     MyApp,
     SigninPage,
@@ -55,10 +60,12 @@ const firebaseAuthConfig = {
   ],
   providers: [
     AuthService,
+    ChatService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserService,
+    MessageService,
   ]
 })
 export class AppModule {}

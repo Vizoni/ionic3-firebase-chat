@@ -1,0 +1,29 @@
+<ion-header>
+
+  <custom-logged-header [title]="pageTitle"></custom-logged-header>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list no-lines>
+    <ion-item *ngFor="let message of messages | async">{{message.text}}</ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+
+  <ion-toolbar>
+    <ion-item no-lines>
+      <ion-input type="text" (keyup.enter)="sendMessage(newMessage); newMessage = '' "
+                 placeholder="Type here..." [(ngModel)]="newMessage">
+                 <!-- key up detecta se pressionar enter ativa a funçao de enviar msg -->
+      </ion-input>
+      <button ion-button item-right (click)="sendMessage(newMessage); newMessage = '' "> 
+        <!-- dps q chamar a funçao, o new message vira uma string vazia-->
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-toolbar>
+
+</ion-footer>

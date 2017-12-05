@@ -25,15 +25,21 @@
   <div [ngSwitch]="view">  <!-- o ng switch vai ficar ouvindo o ng model VIEW -->
 
     <ion-list no-lines *ngSwitchCase=" 'chats' "> <!-- se o view for o CHATS -->
-      <ion-item>Chats</ion-item>
+      <button ion-item *ngFor="let chat of chats | async" (click)="onChatOpen(chat)">
+        <h2>{{ chat.title }}</h2>
+        <!-- se c.lastMessage for FALSE, ele cai no else, que vai chamar o elemento abaixo (através do #) -->
+        <p *ngIf="chat.lastMessage; else customMessage"> {{ chat.timeStamp | date: 'dd/MM/yyyy HH:mm'}} - {{ chat.lastMessage }}</p>
+        <ng-template #customMessage>
+          <p>No messages.</p>
+        </ng-template>
+        <!-- <p *ngIf="chat.lastMessage"> {{ chat.timeStamp | date: 'dd/MM/yyyy HH:mm'}} - {{ chat.lastMessage }}</p>
+        <p *ngIf="!chat.lastMessage">No messages.</p> -->
+      </button>
     </ion-list>
     <ion-list no-lines *ngSwitchCase=" 'users' "> <!-- se o view for o USERS -->
-      <h4> Usuários Cadastrados: </h4> 
       <!-- o pipe ( | async) é para esperar retornar a resposta do observable do servidor  -->
       <button ion-item *ngFor="let user of users | async" (click)="onChatCreate(user)"> {{user.name}} </button> 
     </ion-list>
 
   </div>
-  
-  <button ion-button block (click)="onSignup()">Sign Up</button>
 </ion-content>

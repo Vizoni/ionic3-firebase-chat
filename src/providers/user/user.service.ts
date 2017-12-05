@@ -2,22 +2,47 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseAuthState } from 'angularfire2/auth';
 import { User } from '../../models/user.model'; // importa a classe de User que compõe o formulário
 import { BaseService } from '../base/base.service';
 import { Observable } from 'rxjs';
+// import { FirebaseObjectObservable } from 'angularfire2/database';
 
 @Injectable()
 export class UserService extends BaseService{
 
   users: FirebaseListObservable<User[]>;  // atributo array de usuarios do tipo (model) User
+  currentUser: FirebaseObjectObservable<User>;
 
   constructor(
     public af: AngularFire, // injeta o angular fire pra poder mexer com o real time
     public http: Http,
   ) {
     super(); // chama o construtor da classe mãe (baseService)
-    this.users = this.af.database.list(`/users`);
+    // this.users = this.af.database.list(`/users`);
+    this.listenAuthState();
+  }
+
+  private listenAuthState(): void { // método privado
+    this.af.auth.subscribe((authState: FirebaseAuthState) => {
+      if(authState) { // se existir um usuário logado
+        this.currentUser = this.af.database.object(`/users/${authState.auth.uid}`);
+        this.setUsers(authState.auth.uid)
+        // atribui o usuario logado ao current user
+      }
+    });
+  }
+
+  private setUsers(uidToExclude: string): void {
+    this.users = <FirebaseListObservable<User[]>> this.af.database.list(`/users`, {
+      query: {
+        orderByChild: 'name'    //orderna pelo nome
+      }
+    }).map((users: User[]) => { //filtra
+      return users.filter((user: User) => user.$key !== uidToExclude);
+      // só vai pegar os usuários que NÃO tem o mesmo id do usuario atual (uid to exclude0)
+    })
   }
 
   create(user: User, userUniqueId: string): firebase.Promise<void> { 
@@ -42,6 +67,11 @@ export class UserService extends BaseService{
     }).catch(this.handleObservableError); // tratamento de erro com o método handleObservableError do BaseService
     
     // return null;
+  }
+
+  getUser(userId: string): FirebaseObjectObservable<User> {
+    return <FirebaseObjectObservable<User>>this.af.database.object(`/users/${userId}`)
+      .catch(this.handleObservableError);
   }
 
 
