@@ -25,7 +25,7 @@ export class ChatService extends BaseService {
         // se usuario estiver logado
         if(authState) {
           // auth é o NÓ do usuario (se houver)
-          this.chat = <FirebaseListObservable<Chat[]>>this.af.database.list(`/chats/${authState.auth.uid}`, {
+          this.chats = <FirebaseListObservable<Chat[]>>this.af.database.list(`/chats/${authState.auth.uid}`, {
             query: {
               orderByChild: 'timeStamp' //retorna em ordem CRESCENTE (tem q ser decrescente, ou seja, a mensagem mais recente)
             }

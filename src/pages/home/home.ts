@@ -20,13 +20,14 @@ import firebase from 'firebase';
 export class HomePage {
 
   users: FirebaseListObservable<User[]>;  // atributo users é uma array de Users do tipo Observable do FireBase
+  chats: FirebaseListObservable<Chat[]>;
   view: string = 'chats';
 
   constructor(
     public authService: AuthService,
+    public chatService: ChatService,
     public navCtrl: NavController,
     public userService: UserService,  // injeta o user service
-    public chatService: ChatService
   ) {
 
   }
@@ -36,7 +37,8 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.users = this.userService.users; 
+    this.chats = this.chatService.chats;
+    this.users = this.userService.users;
     // o atributo users dessa página é o mesmo q o atributo do user service   
   }
 
