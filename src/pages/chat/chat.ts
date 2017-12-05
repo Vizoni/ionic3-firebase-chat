@@ -1,4 +1,3 @@
-import { Message } from './../../models/message.model';
 import { Component, ViewChild } from '@angular/core';
 import { Content, IonicPage, NavController, NavParams } from 'ionic-angular';
 

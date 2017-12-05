@@ -1,5 +1,7 @@
-<ion-menu [content]="minhaNav" enabled="true" id="user-menu">
+<ion-menu [content]="minhaNav" enabled="false" id="user-menu">
+    <user-menu [user]="currentUser">
 
+    </user-menu>
 </ion-menu>
 
 <ion-nav #minhaNav [root]="rootPage"></ion-nav>
