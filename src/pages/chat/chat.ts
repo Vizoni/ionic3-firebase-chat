@@ -82,7 +82,6 @@ export class ChatPage {
         new Message (this.sender.$key, newMessage, currentTimeStamp),
         this.messages
       ).then(() => {
-        console.log(this.chat1,this.chat2);
         //atualiza lastMessage e timestamp dos 2 chats
         this.chat1
           .update({
