@@ -64,15 +64,24 @@ export class HomePage {
               this.chatService.create(chat2,recipientUser.$key,currentUser.$key);
             }
 
-          })
+          });
+          
       })
-
-
-    this.navCtrl.push(ChatPage, {
-      recipientUser: recipientUser  // envia o parametro que é o destinatário da mensagem pra pagina ChatPage
-    });
+      this.navCtrl.push(ChatPage, {
+        recipientUser: recipientUser  // envia o parametro que é o destinatário da mensagem pra pagina ChatPage
+      });
   }
 
+  onChatOpen(chat: Chat): void {
+    let recipientUserId: string = chat.$key; // recebe o ID do usuario destinatário
+    this.userService.getUser(recipientUserId)
+      .first()
+      .subscribe((user: User) => {
+        this.navCtrl.push(ChatPage, {
+          recipientUser: user  // envia o parametro que é o destinatário da mensagem pra pagina ChatPage
+        });
+      });
+  }
   
 
 }

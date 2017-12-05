@@ -70,7 +70,7 @@ export class UserService extends BaseService{
   }
 
   getUser(userId: string): FirebaseObjectObservable<User> {
-    return <FirebaseObjectObservable<User>>this.af.database.object(`/users${userId}`)
+    return <FirebaseObjectObservable<User>>this.af.database.object(`/users/${userId}`)
       .catch(this.handleObservableError);
   }
 
