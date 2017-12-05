@@ -45,8 +45,10 @@ export class ChatService extends BaseService {
   }
 
   getDeepChat(userId1: string, userId2: string): FirebaseObjectObservable<Chat>{
-    return <FirebaseObjectObservable<Chat>> this.af.database.object(`/users/${userId1}/${userId2}`)
+    return <FirebaseObjectObservable<Chat>> this.af.database.object(`/chats/${userId1}/${userId2}`)
       .catch(this.handleObservableError);
+    // return <FirebaseObjectObservable<Chat>> this.af.database.object(`/users/${userId1}/${userId2}`)
+    //   .catch(this.handleObservableError);
   }
 
 }

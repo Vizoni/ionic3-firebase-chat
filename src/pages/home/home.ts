@@ -47,6 +47,7 @@ export class HomePage {
   }
 
   onChatCreate(recipientUser: User): void {
+    
     this.userService.currentUser  //tem q ter o subscribe por ser uma promise e a gente ficar 'ouvindo' as alteraçoes
       .first()
       .subscribe((currentUser: User) => { // o usuario atual é o current User
@@ -56,7 +57,8 @@ export class HomePage {
             
             if(chat.hasOwnProperty('$value')) { // chat tem uma propriedade própria chamada '$value' ? 
               // se tiver, é que não existe
-              let timestamp: Object = firebase.database.ServerValue.TIMESTAMP; // pega o timestamp do servidor
+              let timestamp: Object = firebase.database.ServerValue.TIMESTAMP; // pega o timestamp do servido
+              
               let chat1 = new Chat('',timestamp,recipientUser.name,''); // parametro ultima mensagem e foto vazia
               this.chatService.create(chat1,currentUser.$key,recipientUser.$key);
               
@@ -83,5 +85,37 @@ export class HomePage {
       });
   }
   
+  filterItems(event: any): void {
+    let searchTerm: string = event.target.value;
+    this.chats = this.chatService.chats;
+    this.users = this.userService.users;
+
+    if (searchTerm) {
+      switch(this.view) {
+
+        case 'chats':
+          this.chats = <FirebaseListObservable<Chat[]>>this.chats
+            .map((chats: Chat[]) => {
+              return chats.filter((chat: Chat) => {
+                //  joga em minusculo pra não ter erro na comparação
+                //  se retornar -1 é q não existe o termo pesquisado
+                return (chat.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+              })
+          })
+          break;
+
+        case 'users':
+          this.users = <FirebaseListObservable<User[]>>this.users
+            .map((users: User[]) => {
+              return users.filter((user: User) => {
+                //  joga em minusculo pra não ter erro na comparação
+                //  se retornar -1 é q não existe o termo pesquisado
+                return (user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+              })
+          })
+          break;
+      }
+    }
+  }  
 
 }
