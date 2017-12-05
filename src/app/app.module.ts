@@ -19,6 +19,7 @@ import { MyApp } from './app.component';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
+import { UserMenuComponent } from './../components/user-menu/user-menu.component';
 import { UserService } from '../providers/user/user.service';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
@@ -46,7 +47,8 @@ const firebaseAuthConfig = {
     MyApp,
     SigninPage,
     SignupPage,
-    UserInfoComponent
+    UserInfoComponent,
+    UserMenuComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig),
