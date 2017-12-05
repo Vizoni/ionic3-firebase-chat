@@ -14,6 +14,7 @@ import { ChatService } from '../providers/chat/chat.service';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { HomePage } from '../pages/home/home';
 import { MyApp } from './app.component';
+import { MessageService } from '../providers/message/message.service';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
 import { UserService } from '../providers/user/user.service';
@@ -64,6 +65,7 @@ const firebaseAuthConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserService,
+    MessageService,
   ]
 })
 export class AppModule {}
