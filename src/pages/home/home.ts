@@ -47,6 +47,7 @@ export class HomePage {
   }
 
   onChatCreate(recipientUser: User): void {
+    
     this.userService.currentUser  //tem q ter o subscribe por ser uma promise e a gente ficar 'ouvindo' as alteraçoes
       .first()
       .subscribe((currentUser: User) => { // o usuario atual é o current User
@@ -56,7 +57,8 @@ export class HomePage {
             
             if(chat.hasOwnProperty('$value')) { // chat tem uma propriedade própria chamada '$value' ? 
               // se tiver, é que não existe
-              let timestamp: Object = firebase.database.ServerValue.TIMESTAMP; // pega o timestamp do servidor
+              let timestamp: Object = firebase.database.ServerValue.TIMESTAMP; // pega o timestamp do servido
+              
               let chat1 = new Chat('',timestamp,recipientUser.name,''); // parametro ultima mensagem e foto vazia
               this.chatService.create(chat1,currentUser.$key,recipientUser.$key);
               

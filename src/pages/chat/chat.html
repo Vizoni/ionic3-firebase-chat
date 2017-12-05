@@ -7,7 +7,12 @@
 
 <ion-content padding>
   <ion-list no-lines>
-    <ion-item *ngFor="let message of messages | async">{{message.text}}</ion-item>
+    <!-- <ion-item *ngFor="let message of messages | async">{{message.text}}</ion-item> -->
+    <message-box *ngFor="let message of messages | async" [message]="message" 
+                  [isFromSender]="(message.userId == sender.$key)">
+                  <!-- Se o id do usuario (sender.$key) for igual ao id do dono da mensagem (message.userId)
+                       então vai retornar true -->
+    </message-box>
   </ion-list>
 </ion-content>
 

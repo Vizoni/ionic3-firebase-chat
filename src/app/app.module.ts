@@ -13,8 +13,9 @@ import { ChatPage } from '../pages/chat/chat';
 import { ChatService } from '../providers/chat/chat.service';
 import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header.component';
 import { HomePage } from '../pages/home/home';
-import { MyApp } from './app.component';
+import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { MessageService } from '../providers/message/message.service';
+import { MyApp } from './app.component';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
 import { UserService } from '../providers/user/user.service';
@@ -40,6 +41,7 @@ const firebaseAuthConfig = {
     ChatPage,
     CustomLoggedHeaderComponent,
     HomePage,
+    MessageBoxComponent,
     MyApp,
     SigninPage,
     SignupPage

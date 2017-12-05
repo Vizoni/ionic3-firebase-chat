@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { FirebaseListObservable } from 'angularfire2';
+// import { AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 import { AuthService } from './../../providers/auth/auth.service';
+import { Chat } from '../../models/chat.model';
+import { ChatService } from '../../providers/chat/chat.service';
 import { Message } from '../../models/message.model';
 import { MessageService } from './../../providers/message/message.service';
 import { User } from '../../models/user.model';
@@ -23,8 +26,16 @@ export class ChatPage {
   sender: User;   // remetente
   recipient: User; //destinatário
 
+  // os 2 atributos abaixo serão usados para atualizar o "last message" da view na home (usados no guard ionViewDidLoad)
+  private chat1: FirebaseObjectObservable<Chat>;  //sender chat
+  private chat2: FirebaseObjectObservable<Chat>;  //recipient chat
+
+  // private chat1: AngularFireObject<Chat>;
+  // private chat2: AngularFireObject<Chat>;
+
   constructor(
     public authService: AuthService,
+    public chatService: ChatService,
     public messageService: MessageService,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,6 +53,9 @@ export class ChatPage {
       .first()
       .subscribe((currentUser: User)=> {
         this.sender = currentUser;
+
+        this.chat1 = this.chatService.getDeepChat(this.sender.$key, this.recipient.$key);
+        this.chat2 = this.chatService.getDeepChat(this.recipient.$key,this.sender.$key);
 
         //  busca de mensagens do chat: (tem q ver se a ordem do usuario está certa
         //  as vezes o remetente (id 1) na vdd é o destinatário (id 2) e vice-versa
@@ -62,13 +76,26 @@ export class ChatPage {
 
   sendMessage(newMessage: string): void {
     if (newMessage) {
-      let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;
+      let currentTimeStamp: Object = firebase.database.ServerValue.TIMESTAMP;
       this.messageService
       .create(  // parametros do metodo create
-        new Message (this.sender.$key, newMessage, timestamp),
+        new Message (this.sender.$key, newMessage, currentTimeStamp),
         this.messages
-      );
-
+      ).then(() => {
+        console.log(this.chat1,this.chat2);
+        //atualiza lastMessage e timestamp dos 2 chats
+        this.chat1
+          .update({
+            lastMessage: newMessage,
+            timeStamp: currentTimeStamp
+          });
+        this.chat2
+          .update({
+            lastMessage: newMessage,
+            timeStamp: currentTimeStamp
+          });
+      })
+    
     }
   }
 
