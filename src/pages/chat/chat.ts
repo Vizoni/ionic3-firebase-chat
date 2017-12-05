@@ -9,6 +9,8 @@ import { MessageService } from './../../providers/message/message.service';
 import { User } from '../../models/user.model';
 import { UserService } from './../../providers/user/user.service';
 
+import firebase from 'firebase';
+
 @IonicPage()
 @Component({
   selector: 'page-chat',
@@ -53,13 +55,21 @@ export class ChatPage {
               //faz a busca com os ID's trocados de ordem
               this.messages = this.messageService.getMessages(this.recipient.$key, this.sender.$key);
             }
-            
+
           })
     });
   }
 
   sendMessage(newMessage: string): void {
-    this.messages.push(newMessage);
+    if (newMessage) {
+      let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;
+      this.messageService
+      .create(  // parametros do metodo create
+        new Message (this.sender.$key, newMessage, timestamp),
+        this.messages
+      );
+
+    }
   }
 
 }
