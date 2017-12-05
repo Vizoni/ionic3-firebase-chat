@@ -85,5 +85,37 @@ export class HomePage {
       });
   }
   
+  filterItems(event: any): void {
+    let searchTerm: string = event.target.value;
+    this.chats = this.chatService.chats;
+    this.users = this.userService.users;
+
+    if (searchTerm) {
+      switch(this.view) {
+
+        case 'chats':
+          this.chats = <FirebaseListObservable<Chat[]>>this.chats
+            .map((chats: Chat[]) => {
+              return chats.filter((chat: Chat) => {
+                //  joga em minusculo pra não ter erro na comparação
+                //  se retornar -1 é q não existe o termo pesquisado
+                return (chat.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+              })
+          })
+          break;
+
+        case 'users':
+          this.users = <FirebaseListObservable<User[]>>this.users
+            .map((users: User[]) => {
+              return users.filter((user: User) => {
+                //  joga em minusculo pra não ter erro na comparação
+                //  se retornar -1 é q não existe o termo pesquisado
+                return (user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+              })
+          })
+          break;
+      }
+    }
+  }  
 
 }
