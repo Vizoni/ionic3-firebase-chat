@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Message } from './../../models/message.model';
+import { Component, ViewChild } from '@angular/core';
+import { Content, IonicPage, NavController, NavParams } from 'ionic-angular';
 
 // import { AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
@@ -21,6 +22,7 @@ import firebase from 'firebase';
 })
 export class ChatPage {
 
+  @ViewChild(Content) content: Content; // pega a instancia do ion-content da pagina (pra fazer o scroll)
   messages: FirebaseListObservable<Message[]>;
   pageTitle: string;
   sender: User;   // remetente
@@ -57,6 +59,12 @@ export class ChatPage {
         this.chat1 = this.chatService.getDeepChat(this.sender.$key, this.recipient.$key);
         this.chat2 = this.chatService.getDeepChat(this.recipient.$key,this.sender.$key);
 
+        let doSubscription = () => {
+          this.messages.subscribe((messages: Message[]) => {
+            this.scrollToBottom();
+          })
+        };
+
         //  busca de mensagens do chat: (tem q ver se a ordem do usuario está certa
         //  as vezes o remetente (id 1) na vdd é o destinatário (id 2) e vice-versa
         this.messages = this.messageService.getMessages(this.sender.$key, this.recipient.$key);
@@ -69,7 +77,7 @@ export class ChatPage {
               //faz a busca com os ID's trocados de ordem
               this.messages = this.messageService.getMessages(this.recipient.$key, this.sender.$key);
             }
-
+            doSubscription();
           })
     });
   }
@@ -96,6 +104,16 @@ export class ChatPage {
       })
     
     }
+  }
+
+  // parametro opcional de duração da animação
+  private scrollToBottom(duration?: number): void {
+    setTimeout(() => {
+      if (this.content) { // se já tiver carregado o this.content (não ser undefined)
+        this.content.scrollToBottom(duration || 300);
+      }
+    }, 50)
+    
   }
 
 }
