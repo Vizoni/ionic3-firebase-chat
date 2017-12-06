@@ -1,4 +1,5 @@
-<ion-menu [content]="minhaNav" enabled="false" id="user-menu">
+<ion-menu [content]="minhaNav" enabled="false" id="user-menu" persistent="true">
+    <!-- persistent = true faz o menu aparecer mesmo qndo dermos um push em novas paginas (empilhar) -->
     <user-menu [user]="currentUser">
 
     </user-menu>
