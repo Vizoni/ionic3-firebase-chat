@@ -33,4 +33,21 @@ export class UserProfilePage {
       })
   }
 
+  onSubmit(event: Event): void {
+    event.preventDefault(); // não dá refresh na página
+    this.editUser();  // chama a função privada
+  }
+
+  private editUser(photoUrl?: string): void {
+    console.log("to enviando: ",this.currentUser)
+    this.userService.edit({
+      name: this.currentUser.name,
+      username: this.currentUser.username,
+      photo: photoUrl  || this.currentUser.photo || ''
+      // se recebeu uma foto nova, põe a foto nova, se não, usa a antiga, se ainda não tiver, fica vazio
+    }).then(() => {
+      this.canEdit = false; // fecha o formulário
+    });
+  }
+
 }

@@ -9,4 +9,31 @@
 
   <user-info [user]="currentUser"></user-info>
 
+  <button ion-button block (click)="canEdit = !canEdit">
+    <!-- ao clicar, o canEdit passa a ser falso -->
+    Edit Profile
+  </button>
+
+  <form (ngSubmit)="onSubmit($event)" *ngIf="canEdit" #profileForm="ngForm">
+    <!-- variável profileForm recebe o elemento do formulário (ngForm) -->
+
+    <ion-item>
+      <ion-icon name="person" item-left></ion-icon>
+      <ion-input type="text" placeholder="Name" [(ngModel)]="currentUser.name"
+                 name="name" required minlength="3">
+
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="at" item-left></ion-icon>
+      <ion-input type="text" placeholder="Username" [(ngModel)]="currentUser.username"
+                 name="username" required minlength="3">
+
+      </ion-input>
+    </ion-item>
+
+    <button ion-button block type="submit" [disabled]="profileForm.form.invalid">Save</button>
+  </form>
+
 </ion-content>
