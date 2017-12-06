@@ -68,6 +68,7 @@ export class UserProfilePage {
       // se recebeu uma foto nova, põe a foto nova, se não, usa a antiga, se ainda não tiver, fica vazio
     }).then(() => {
       this.canEdit = false; // fecha o formulário
+      this.filePhoto = undefined; // reseta o atributo
     });
   }
 

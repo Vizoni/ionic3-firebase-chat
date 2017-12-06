@@ -16,6 +16,7 @@ import { HomePage } from '../pages/home/home';
 import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { MessageService } from '../providers/message/message.service';
 import { MyApp } from './app.component';
+import { ProgressBarComponent } from './../components/progress-bar/progress-bar.component';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
@@ -46,6 +47,7 @@ const firebaseAuthConfig = {
     HomePage,
     MessageBoxComponent,
     MyApp,
+    ProgressBarComponent,
     SigninPage,
     SignupPage,
     UserInfoComponent,
