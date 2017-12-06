@@ -30,6 +30,9 @@
 
     <ion-list no-lines *ngSwitchCase=" 'chats' "> <!-- se o view for o CHATS -->
       <button ion-item *ngFor="let chat of chats | async" (click)="onChatOpen(chat)">
+        <ion-avatar item-left>
+          <img [src]="chat.photo || 'assets/imgs/no-photo.jpg'">
+        </ion-avatar>
         <h2>{{ chat.title }}</h2>
         <!-- se c.lastMessage for FALSE, ele cai no else, que vai chamar o elemento abaixo (através do #) -->
         <!-- <p *ngIf="chat.lastMessage; else customMessage"> {{ chat.timeStamp | date: 'dd/MM/yyyy HH:mm'}} - {{ chat.lastMessage }}</p>
@@ -42,7 +45,12 @@
     </ion-list>
     <ion-list no-lines *ngSwitchCase=" 'users' "> <!-- se o view for o USERS -->
       <!-- o pipe ( | async) é para esperar retornar a resposta do observable do servidor  -->
-      <button ion-item *ngFor="let user of users | async" (click)="onChatCreate(user)"> {{user.name}} </button> 
+      <button ion-item *ngFor="let user of users | async" (click)="onChatCreate(user)">
+        <ion-avatar item-left>
+          <img [src]="user.photo || 'assets/imgs/no-photo.jpg'">
+        </ion-avatar>
+        {{user.name}} 
+      </button> 
     </ion-list>
 
   </div>
