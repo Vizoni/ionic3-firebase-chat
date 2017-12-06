@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth/auth.service';
@@ -19,6 +19,7 @@ export class UserProfilePage {
 
   constructor(
     public authService: AuthService,
+    public cd: ChangeDetectorRef,
     public navCtrl: NavController,
     public navParams: NavParams,
     public userService: UserService
@@ -46,6 +47,8 @@ export class UserProfilePage {
       uploadTask.on('state_changed', (snapshot: firebase.storage.UploadTaskSnapshot) => {
         this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         // divide o tanto q já foi enviado pelo total e multiplica por 100 pra obter a porcentagem
+        this.cd.detectChanges();
+        //detecta as mudanças que ocorreram do calculo para atualizar o template
       }, (error: Error) => {  // callback de erro
         //catch error
       }, () => { // callback qndo finalizar o upload
@@ -71,6 +74,7 @@ export class UserProfilePage {
       this.canEdit = false; // fecha o formulário
       this.filePhoto = undefined; // reseta o atributo
       this.uploadProgress = 0; // barra de progresso fica em 0%;
+      this.cd.detectChanges();
     });
   }
 
