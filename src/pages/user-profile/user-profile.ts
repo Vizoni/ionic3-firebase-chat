@@ -14,6 +14,7 @@ export class UserProfilePage {
 
   currentUser: User;
   canEdit: boolean = false;
+  uploadProgress: number;
   private filePhoto: File;  // armazena a foto MAIS ATUAL do user (que tá no formulario)
 
   constructor(
@@ -42,8 +43,9 @@ export class UserProfilePage {
 
       // vai ouvir a mudança de estado dessa task (qndo completar)
       // o snapshot é uma callback pra acessar o estado atual do upload
-      uploadTask.on('state_changed', (snapshot) => {
-        
+      uploadTask.on('state_changed', (snapshot: firebase.storage.UploadTaskSnapshot) => {
+        this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        // divide o tanto q já foi enviado pelo total e multiplica por 100 pra obter a porcentagem
       }, (error: Error) => {  // callback de erro
         //catch error
       }, () => { // callback qndo finalizar o upload
@@ -60,7 +62,6 @@ export class UserProfilePage {
   }
 
   private editUser(photoUrl?: string): void {
-    console.log("to enviando: ",this.currentUser)
     this.userService.edit({
       name: this.currentUser.name,
       username: this.currentUser.username,
@@ -69,6 +70,7 @@ export class UserProfilePage {
     }).then(() => {
       this.canEdit = false; // fecha o formulário
       this.filePhoto = undefined; // reseta o atributo
+      this.uploadProgress = 0; // barra de progresso fica em 0%;
     });
   }
 

@@ -3,7 +3,7 @@ import { CustomLoggedHeaderComponent } from './custom-logged-header/custom-logge
 import { MessageBoxComponent } from './message-box/message-box.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
-import { ProgressBarComponent } from './progress-bar/progress-bar';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 @NgModule({
 	declarations: [CustomLoggedHeaderComponent,
     MessageBoxComponent,

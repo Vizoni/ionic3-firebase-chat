@@ -37,6 +37,9 @@
       <!-- toda vez q o usuario mudar a foto (evento CHANGE), chama a funçao -->
     </ion-item>
 
+    <progress-bar *ngIf="uploadProgress" [progress]="uploadProgress"></progress-bar>
+    
+    <br/>
     <button ion-button block type="submit" [disabled]="profileForm.form.invalid">Save</button>
   </form>
 
