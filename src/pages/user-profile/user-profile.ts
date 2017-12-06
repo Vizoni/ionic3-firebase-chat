@@ -36,7 +36,23 @@ export class UserProfilePage {
 
   onSubmit(event: Event): void {
     event.preventDefault(); // não dá refresh na página
-    this.editUser();  // chama a função privada
+
+    if (this.filePhoto) {
+      let uploadTask = this.userService.uploadPhoto(this.filePhoto,this.currentUser.$key);
+
+      // vai ouvir a mudança de estado dessa task (qndo completar)
+      // o snapshot é uma callback pra acessar o estado atual do upload
+      uploadTask.on('state_changed', (snapshot) => {
+        
+      }, (error: Error) => {  // callback de erro
+        //catch error
+      }, () => { // callback qndo finalizar o upload
+        this.editUser(uploadTask.snapshot.downloadURL); // passa a url completa
+      } )
+
+    } else {
+      this.editUser();  // chama a função privada
+    }
   }
 
   onPhoto(event): void { 
