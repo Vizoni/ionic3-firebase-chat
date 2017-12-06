@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseApp, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FirebaseAuthState } from 'angularfire2/auth';
 import { User } from '../../models/user.model'; // importa a classe de User que compõe o formulário
 import { BaseService } from '../base/base.service';
 import { Observable } from 'rxjs';
+// import { FirebaseApp } from 'angularfire2/tokens';
 // import { FirebaseObjectObservable } from 'angularfire2/database';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class UserService extends BaseService{
 
   constructor(
     public af: AngularFire, // injeta o angular fire pra poder mexer com o real time
+    @Inject(FirebaseApp) public firebaseApp: any,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
     public http: Http,
   ) {
     super(); // chama o construtor da classe mãe (baseService)
@@ -81,6 +83,14 @@ export class UserService extends BaseService{
       .catch(this.handleObservableError);
   }
 
+  uploadPhoto(photoFile: File, userId: string): firebase.storage.UploadTask {
+    // dava pra pegar o userId pelo this.currentUser.$key
+    return this.firebaseApp
+      .storage()
+      .ref()    // se deixasse aqui ia armazenar no root
+      .child(`/users/${userId}`)  // armazena no nó users com a chave userId
+      .put(photoFile); // o parametro é o arquivo q vai ser armazenado
+  }
 
 
 }
