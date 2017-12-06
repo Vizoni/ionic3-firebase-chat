@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Content, IonicPage, NavController, NavParams } from 'ionic-angular';
 
-// import { AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 import { AuthService } from './../../providers/auth/auth.service';
@@ -31,8 +30,6 @@ export class ChatPage {
   private chat1: FirebaseObjectObservable<Chat>;  //sender chat
   private chat2: FirebaseObjectObservable<Chat>;  //recipient chat
 
-  // private chat1: AngularFireObject<Chat>;
-  // private chat2: AngularFireObject<Chat>;
 
   constructor(
     public authService: AuthService,
@@ -55,8 +52,16 @@ export class ChatPage {
       .subscribe((currentUser: User)=> {
         this.sender = currentUser;
 
+        // pega os chats para o remetente e para o destinatário
         this.chat1 = this.chatService.getDeepChat(this.sender.$key, this.recipient.$key);
         this.chat2 = this.chatService.getDeepChat(this.recipient.$key,this.sender.$key);
+
+        // atualizar a foto do usuário
+        this.chat1
+          .first()
+          .subscribe((chat: Chat) => {
+            this.chatService.updatePhoto(this.chat1, chat.photo, this.recipient.photo);
+          })
 
         let doSubscription = () => {
           this.messages.subscribe((messages: Message[]) => {
