@@ -47,8 +47,18 @@ export class ChatService extends BaseService {
   getDeepChat(userId1: string, userId2: string): FirebaseObjectObservable<Chat>{
     return <FirebaseObjectObservable<Chat>> this.af.database.object(`/chats/${userId1}/${userId2}`)
       .catch(this.handleObservableError);
-    // return <FirebaseObjectObservable<Chat>> this.af.database.object(`/users/${userId1}/${userId2}`)
-    //   .catch(this.handleObservableError);
+  }
+
+  uploadPhoto(chat: FirebaseObjectObservable<Chat>, chatPhoto: string, recipientUserPhoto: string): firebase.Promise<void> {
+    if (chatPhoto != recipientUserPhoto) {
+      // então tem que atualizar a foto do chat
+      return chat.update({
+        photo: recipientUserPhoto
+      }).then(() => {
+        return true;
+      }).catch(this.handlePromiseError); 
+    }
+    return Promise.resolve();
   }
 
 }
