@@ -14,6 +14,7 @@ export class UserProfilePage {
 
   currentUser: User;
   canEdit: boolean = false;
+  private filePhoto: File;  // armazena a foto MAIS ATUAL do user (que tá no formulario)
 
   constructor(
     public authService: AuthService,
@@ -36,6 +37,10 @@ export class UserProfilePage {
   onSubmit(event: Event): void {
     event.preventDefault(); // não dá refresh na página
     this.editUser();  // chama a função privada
+  }
+
+  onPhoto(event): void { 
+    this.filePhoto = event.target.files[0]; // como tá fazendo o upload de apenas 1 foto, usamos o índice 0
   }
 
   private editUser(photoUrl?: string): void {

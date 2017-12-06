@@ -21,7 +21,6 @@
       <ion-icon name="person" item-left></ion-icon>
       <ion-input type="text" placeholder="Name" [(ngModel)]="currentUser.name"
                  name="name" required minlength="3">
-
       </ion-input>
     </ion-item>
 
@@ -29,8 +28,13 @@
       <ion-icon name="at" item-left></ion-icon>
       <ion-input type="text" placeholder="Username" [(ngModel)]="currentUser.username"
                  name="username" required minlength="3">
-
       </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="image" item-left></ion-icon>
+      <input type="file" (change)="onPhoto($event)">
+      <!-- toda vez q o usuario mudar a foto (evento CHANGE), chama a funçao -->
     </ion-item>
 
     <button ion-button block type="submit" [disabled]="profileForm.form.invalid">Save</button>
