@@ -18,8 +18,8 @@ export class UserService extends BaseService{
 
   constructor(
     public af: AngularFire, // injeta o angular fire pra poder mexer com o real time
-    @Inject(FirebaseApp) public firebaseApp: FirebaseApp,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
-    // @Inject(FirebaseApp) public firebaseApp: any,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
+    // @Inject(FirebaseApp) public firebaseApp: FirebaseApp,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
+    @Inject(FirebaseApp) public firebaseApp: any,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
     public http: Http,
   ) {
     super(); // chama o construtor da classe mãe (baseService)
