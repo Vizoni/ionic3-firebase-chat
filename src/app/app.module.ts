@@ -30,7 +30,7 @@ const firebaseAppConfig: FirebaseAppConfig = {
   authDomain: "ionic2-firebase-chat-c582c.firebaseapp.com",
   databaseURL: "https://ionic2-firebase-chat-c582c.firebaseio.com",
   storageBucket: "ionic2-firebase-chat-c582c.appspot.com",
-  messagingSenderId: "717491479259"
+  // messagingSenderId: "717491479259"
 };
 
 
