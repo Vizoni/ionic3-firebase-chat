@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AngularFire, FirebaseApp, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, FirebaseApp } from 'angularfire2';
 import { FirebaseAuthState } from 'angularfire2/auth';
 import { User } from '../../models/user.model'; // importa a classe de User que compõe o formulário
 import { BaseService } from '../base/base.service';
@@ -18,7 +18,8 @@ export class UserService extends BaseService{
 
   constructor(
     public af: AngularFire, // injeta o angular fire pra poder mexer com o real time
-    @Inject(FirebaseApp) public firebaseApp: any,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
+    @Inject(FirebaseApp) public firebaseApp: FirebaseApp,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
+    // @Inject(FirebaseApp) public firebaseApp: any,  // o firebaseApp é do tipo any mas o tipo da instancia é pra buscar na dependencia do FirebaseApp
     public http: Http,
   ) {
     super(); // chama o construtor da classe mãe (baseService)
