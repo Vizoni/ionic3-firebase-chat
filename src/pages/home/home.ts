@@ -61,10 +61,10 @@ export class HomePage {
               // se tiver, é que não existe
               let timestamp: Object = firebase.database.ServerValue.TIMESTAMP; // pega o timestamp do servido
               
-              let chat1 = new Chat('',timestamp,recipientUser.name,''); // parametro ultima mensagem e foto vazia
+              let chat1 = new Chat('',timestamp,recipientUser.name, (recipientUser.photo || '')); // parametro ultima mensagem e foto vazia
               this.chatService.create(chat1,currentUser.$key,recipientUser.$key);
               
-              let chat2 = new Chat('',timestamp,currentUser.name,'');
+              let chat2 = new Chat('',timestamp,currentUser.name,(currentUser.photo || ''));
               this.chatService.create(chat2,recipientUser.$key,currentUser.$key);
             }
 
