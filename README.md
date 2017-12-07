@@ -10,6 +10,7 @@ Ionic **3** Firebase Chat: My first app with Ionic 3 using Firebase.
 ## Try it out!
 1. [Firebase Host](https://ionic2-firebase-chat-c582c.firebaseapp.com/);
 2. [Android APK](https://drive.google.com/open?id=1006s5IkBrdekz5ZbCJk7IxRl_mqQfg0i)
+    * Make sure to set up the needed device configuration. [How to do](https://developer.android.com/studio/run/device.html#developer-device-options)
 
 ## Deployment
 **WEB:**
