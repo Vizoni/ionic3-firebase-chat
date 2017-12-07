@@ -1,5 +1,4 @@
 # ionic2-firebase-chat
-Ionic 2 Firebase Chat: Meu primeiro aplicativo em Ionic 2 utilizando algumas funcionalidades do Firebase.
 Ionic **3** Firebase Chat: My first app with Ionic 3 using Firebase.
 
 ## Getting Started
