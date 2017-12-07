@@ -33,7 +33,7 @@
 
     <ion-item>
       <ion-icon name="image" item-left></ion-icon>
-      <input type="file" (change)="onPhoto($event)">
+      <input type="file" accept="image/*" (change)="onPhoto($event)">
       <!-- toda vez q o usuario mudar a foto (evento CHANGE), chama a funçao -->
     </ion-item>
 

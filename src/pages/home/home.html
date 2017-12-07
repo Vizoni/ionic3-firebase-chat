@@ -30,7 +30,7 @@
 
     <ion-list no-lines *ngSwitchCase=" 'chats' "> <!-- se o view for o CHATS -->
       <button ion-item *ngFor="let chat of chats | async" (click)="onChatOpen(chat)">
-        <ion-avatar item-left>
+        <ion-avatar item-start>
           <img [src]="chat.photo || 'assets/imgs/no-photo.jpg'">
         </ion-avatar>
         <h2>{{ chat.title }}</h2>
