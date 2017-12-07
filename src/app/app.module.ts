@@ -16,9 +16,13 @@ import { HomePage } from '../pages/home/home';
 import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { MessageService } from '../providers/message/message.service';
 import { MyApp } from './app.component';
+import { ProgressBarComponent } from './../components/progress-bar/progress-bar.component';
 import { SignupPage } from '../pages/signup/signup';
 import { SigninPage } from '../pages/signin/signin';
+import { UserInfoComponent } from './../components/user-info/user-info.component';
+import { UserMenuComponent } from './../components/user-menu/user-menu.component';
 import { UserService } from '../providers/user/user.service';
+import { UserProfilePage } from './../pages/user-profile/user-profile';
 
 /* Salva as configurações do firebase (pega no painel do projeto no site do firebase) em uma constante */
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -43,8 +47,12 @@ const firebaseAuthConfig = {
     HomePage,
     MessageBoxComponent,
     MyApp,
+    ProgressBarComponent,
     SigninPage,
-    SignupPage
+    SignupPage,
+    UserInfoComponent,
+    UserMenuComponent,
+    UserProfilePage
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig),
@@ -58,7 +66,8 @@ const firebaseAuthConfig = {
     HomePage,
     MyApp,
     SigninPage,
-    SignupPage
+    SignupPage,
+    UserProfilePage
   ],
   providers: [
     AuthService,

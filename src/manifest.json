@@ -4,10 +4,13 @@
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "assets/imgs/logo.png",
-    "sizes": "512x512",
+    // "src": "assets/imgs/logo.png",
+    "src": "assets/imgs/rocket.png",
+    // "sizes": "512x512",
+    "sizes": "256x256",
     "type": "image/png"
   }],
-  "background_color": "#4e8ef7",
+  "background_color": "#264d73",
+  // "background_color": "#4e8ef7",
   "theme_color": "#4e8ef7"
 }

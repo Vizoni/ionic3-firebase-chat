@@ -10,7 +10,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 
 import { AuthService } from '../../providers/auth/auth.service';
 import { UserService } from './../../providers/user/user.service';
-import { User } from '../../models/user.model';
+// import { User } from '../../models/user.model';
 
 import { HomePage } from './../home/home';
 
