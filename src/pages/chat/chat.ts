@@ -75,33 +75,18 @@ export class ChatPage {
         let updateSenderReadMessage = () => {
           this.messages.subscribe((message: Message[]) => {
             message.filter((msg: Message) => {
-              // console.log(msg.userId, this.sender.$key);
-              // console.log((msg.read == false || msg.read == undefined), (msg.userId != this.sender.$key))
-              console.log(msg);
-              debugger;
               if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
-                console.log("vai atualizar PRIMEIRO O SENDER");
                 this.messageService.setMessageRead(this.sender.$key, this.recipient.$key, msg.$key);
-              } else {
-                console.log("nao vai atualizar");
               }
             })
           });
         }
 
         let updateRecipientReadMessage = () => {
-          console.log("recipient vai atualizar!!  "+this.sender.name);
           this.messages.subscribe((message: Message[]) => {
             message.filter((msg: Message) => {
-              // console.log(msg.userId, this.sender.$key);
-              // console.log((msg.read == false || msg.read == undefined), (msg.userId != this.sender.$key))
-              console.log(msg);              
-              debugger;
               if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
-                console.log("vai atualizar PRIMEIRO O SENDER");
                 this.messageService.setMessageRead(this.recipient.$key, this.sender.$key, msg.$key);
-              } else {
-                console.log("nao vai atualizar");
               }
             })
           });
@@ -120,29 +105,12 @@ export class ChatPage {
               this.messages = this.messageService.getMessages(this.recipient.$key, this.sender.$key);
               updateRecipientReadMessage();
             } else {
+              // se o NÓ do chat é o ID do sender primeiro dps o do recipient
               updateSenderReadMessage();
             }
             doSubscription();
             
           })
-
-        // TO TRABIANDO AQUIIIIIIIII -----------------------
-        /*
-        console.log("meuId: "+this.sender.$key);
-        this.messages.subscribe((message: Message[]) => {
-          message.filter((msg: Message) => {
-          if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
-              console.log("vai atualizar PRIMEIRO O SENDER");
-              this.messageService.setMessageRead(this.sender.$key, this.recipient.$key, msg.$key);
-            } else {
-              console.log("nao vai atualizar");
-            }
-            // console.log(msg.userId, this.sender.$key);
-            // console.log((msg.read == false || msg.read == undefined), (msg.userId != this.sender.$key))
-          })
-        });
-        */
-        // -----------------------------------------------------
     });
   }
 

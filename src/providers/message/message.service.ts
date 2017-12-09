@@ -26,7 +26,6 @@ export class MessageService extends BaseService{
   }
 
   setMessageRead(userId1: string, userId2: string, messageId: string): void {
-    console.log("parametros: ",userId1,userId2,messageId);
     // this.af.database.list(`/messages/${userId1}-${userId2}/${messageId}`)
     this.af.database.list(`/messages/${userId1}-${userId2}`)
       .update(messageId, {
