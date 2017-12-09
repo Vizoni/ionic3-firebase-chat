@@ -72,6 +72,26 @@ export class ChatPage {
           })
         };
 
+        let updateSenderReadMessage = () => {
+          this.messages.subscribe((message: Message[]) => {
+            message.filter((msg: Message) => {
+              if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
+                this.messageService.setMessageRead(this.sender.$key, this.recipient.$key, msg.$key);
+              }
+            })
+          });
+        }
+
+        let updateRecipientReadMessage = () => {
+          this.messages.subscribe((message: Message[]) => {
+            message.filter((msg: Message) => {
+              if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
+                this.messageService.setMessageRead(this.recipient.$key, this.sender.$key, msg.$key);
+              }
+            })
+          });
+        }
+
         //  busca de mensagens do chat: (tem q ver se a ordem do usuario está certa
         //  as vezes o remetente (id 1) na vdd é o destinatário (id 2) e vice-versa
         this.messages = this.messageService.getMessages(this.sender.$key, this.recipient.$key);
@@ -83,8 +103,13 @@ export class ChatPage {
             if (messageList.length === 0) { // se não existir nenhuma mensagem assim
               //faz a busca com os ID's trocados de ordem
               this.messages = this.messageService.getMessages(this.recipient.$key, this.sender.$key);
+              updateRecipientReadMessage();
+            } else {
+              // se o NÓ do chat é o ID do sender primeiro dps o do recipient
+              updateSenderReadMessage();
             }
             doSubscription();
+            
           })
     });
   }
@@ -94,7 +119,7 @@ export class ChatPage {
       let currentTimeStamp: Object = firebase.database.ServerValue.TIMESTAMP;
       this.messageService
       .create(  // parametros do metodo create
-        new Message (this.sender.$key, newMessage, currentTimeStamp),
+        new Message (this.sender.$key, newMessage, currentTimeStamp, false),
         this.messages
       ).then(() => {
         //atualiza lastMessage e timestamp dos 2 chats

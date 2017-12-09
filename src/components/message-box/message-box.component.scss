@@ -20,6 +20,16 @@ message-box {
             margin-top: 5px;
             color: #999;
         }
+        
+        p ion-icon.primeiro-icone {
+            float: right;
+            margin-left: -4px;
+        }
+
+        p ion-icon.segundo-icone {
+            float: right;
+            padding-left: 15px;
+        }
     }
 
     .sender-background {
@@ -27,5 +37,9 @@ message-box {
         // float: right !important;
         // background-color: map-get($colors, primary ); // se quisesse usar alguma variável do tema
 
+    }
+
+    .ja-leu {
+        color: map-get($colors, primary);
     }
 }
