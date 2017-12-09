@@ -1,6 +1,32 @@
 <!-- O atributo do objeto passado pro ng-Class é a CLASSE que vai receber SE o VALOR DO ATRIBUTO (:) for true -->
 <div class="text" [ngClass]="{'sender-background' : isFromSender}">
   <p>{{ message.text }}</p>
-  <p class="timestamp"> {{ message.timeStamp | date:'dd/MM/y H:mm' }}</p>
-  <!-- <p class="timestamp"> {{ message.timestamp | date: "H:mm" }}</p> -->
+  <!-- <p class="timestamp"> {{ message.timeStamp | date:'dd/MM/y H:mm' }}</p> -->
+  <p class="timestamp" > {{ message.timeStamp | date: 'HH:mm' }}
+    <ion-icon class="primeiro-icone" name="md-checkmark" [ngClass]="{'ja-leu' : alreadyRead}" *ngIf="isFromSender"></ion-icon>
+    <ion-icon class="segundo-icone" name="md-checkmark" [ngClass]="{'ja-leu' : alreadyRead}" *ngIf="isFromSender"></ion-icon>
+  </p>
+
+
+
+
+    <!-- <ion-item detail-none no-lines item-start>
+      <p class="timestamp"> {{ message.timeStamp | date: 'HH:mm' }}</p>
+    </ion-item>
+    <ion-item detail-none no-lines item-end>
+        <ion-icon name="md-checkmark"></ion-icon>
+    </ion-item> -->
+
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col col-8>
+        <p class="timestamp"> {{ message.timeStamp | date: 'HH:mm' }}</p>
+      </ion-col>
+      <ion-col col-4>
+       <ion-icon name="md-checkmark" style="font-size: 0.8em;
+       margin-top: 5px;
+       color: #999;"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 </div>

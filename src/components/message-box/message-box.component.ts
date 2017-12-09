@@ -20,7 +20,8 @@ export class MessageBoxComponent {
 
   // o decorator Input permite passar valores da view pra cá
   @Input() message: Message;    
-  @Input() isFromSender: boolean;  
+  @Input() isFromSender: boolean;
+  @Input() alreadyRead: boolean;
 
   constructor() {}
 

@@ -9,7 +9,7 @@
   <ion-list no-lines>
     <!-- <ion-item *ngFor="let message of messages | async">{{message.text}}</ion-item> -->
     <message-box *ngFor="let message of messages | async" [message]="message" 
-                  [isFromSender]="(message.userId == sender.$key)">
+                  [isFromSender]="(message.userId == sender.$key)" [alreadyRead]="(message.read)">
                   <!-- Se o id do usuario (sender.$key) for igual ao id do dono da mensagem (message.userId)
                        então vai retornar true -->
     </message-box>

@@ -72,6 +72,41 @@ export class ChatPage {
           })
         };
 
+        let updateSenderReadMessage = () => {
+          this.messages.subscribe((message: Message[]) => {
+            message.filter((msg: Message) => {
+              // console.log(msg.userId, this.sender.$key);
+              // console.log((msg.read == false || msg.read == undefined), (msg.userId != this.sender.$key))
+              console.log(msg);
+              debugger;
+              if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
+                console.log("vai atualizar PRIMEIRO O SENDER");
+                this.messageService.setMessageRead(this.sender.$key, this.recipient.$key, msg.$key);
+              } else {
+                console.log("nao vai atualizar");
+              }
+            })
+          });
+        }
+
+        let updateRecipientReadMessage = () => {
+          console.log("recipient vai atualizar!!  "+this.sender.name);
+          this.messages.subscribe((message: Message[]) => {
+            message.filter((msg: Message) => {
+              // console.log(msg.userId, this.sender.$key);
+              // console.log((msg.read == false || msg.read == undefined), (msg.userId != this.sender.$key))
+              console.log(msg);              
+              debugger;
+              if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
+                console.log("vai atualizar PRIMEIRO O SENDER");
+                this.messageService.setMessageRead(this.recipient.$key, this.sender.$key, msg.$key);
+              } else {
+                console.log("nao vai atualizar");
+              }
+            })
+          });
+        }
+
         //  busca de mensagens do chat: (tem q ver se a ordem do usuario está certa
         //  as vezes o remetente (id 1) na vdd é o destinatário (id 2) e vice-versa
         this.messages = this.messageService.getMessages(this.sender.$key, this.recipient.$key);
@@ -83,9 +118,31 @@ export class ChatPage {
             if (messageList.length === 0) { // se não existir nenhuma mensagem assim
               //faz a busca com os ID's trocados de ordem
               this.messages = this.messageService.getMessages(this.recipient.$key, this.sender.$key);
+              updateRecipientReadMessage();
+            } else {
+              updateSenderReadMessage();
             }
             doSubscription();
+            
           })
+
+        // TO TRABIANDO AQUIIIIIIIII -----------------------
+        /*
+        console.log("meuId: "+this.sender.$key);
+        this.messages.subscribe((message: Message[]) => {
+          message.filter((msg: Message) => {
+          if ((msg.read == false || msg.read == undefined) && msg.userId != this.sender.$key) { // DEPOIS EXPLICO A GAMBIARRA
+              console.log("vai atualizar PRIMEIRO O SENDER");
+              this.messageService.setMessageRead(this.sender.$key, this.recipient.$key, msg.$key);
+            } else {
+              console.log("nao vai atualizar");
+            }
+            // console.log(msg.userId, this.sender.$key);
+            // console.log((msg.read == false || msg.read == undefined), (msg.userId != this.sender.$key))
+          })
+        });
+        */
+        // -----------------------------------------------------
     });
   }
 
@@ -94,7 +151,7 @@ export class ChatPage {
       let currentTimeStamp: Object = firebase.database.ServerValue.TIMESTAMP;
       this.messageService
       .create(  // parametros do metodo create
-        new Message (this.sender.$key, newMessage, currentTimeStamp),
+        new Message (this.sender.$key, newMessage, currentTimeStamp, false),
         this.messages
       ).then(() => {
         //atualiza lastMessage e timestamp dos 2 chats

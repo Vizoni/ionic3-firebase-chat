@@ -25,6 +25,17 @@ export class MessageService extends BaseService{
     }).catch(this.handleObservableError);
   }
 
+  setMessageRead(userId1: string, userId2: string, messageId: string): void {
+    console.log("parametros: ",userId1,userId2,messageId);
+    // this.af.database.list(`/messages/${userId1}-${userId2}/${messageId}`)
+    this.af.database.list(`/messages/${userId1}-${userId2}`)
+      .update(messageId, {
+        read: true
+      }
+    )
+
+  }
+
   create(message: Message, listMessages: FirebaseListObservable<Message[]>): firebase.Promise<void> {
     return listMessages.push(message)
       .catch(this.handlePromiseError);
