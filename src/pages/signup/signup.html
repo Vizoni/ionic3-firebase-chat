@@ -19,21 +19,42 @@
 
   <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
   
-    <ion-item>
-      <ion-icon name="person" item-left color="primary"></ion-icon>
+    <ion-item [class.invalid]="!signupForm.controls.name.valid && signupForm.controls.name.dirty">
+      <ion-icon [class.invalid-icon]="!signupForm.controls.name.valid && signupForm.controls.name.dirty" name="person" item-left color="primary"></ion-icon>
       <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-icon name="at" item-left color="primary"></ion-icon>
+    <ion-item *ngIf="!signupForm.controls.name.valid  && signupForm.controls.name.dirty">
+      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.required">Please enter a valid name.</p>
+      <p class="invalid-icon" *ngIf="signupForm.controls.name.errors.minlength">Your name must have at least 3 characteres</p>
+    </ion-item>
+    
+    <ion-item [class.invalid]="!signupForm.controls.username.valid && signupForm.controls.username.dirty">
+      <ion-icon [class.invalid-icon]="!signupForm.controls.username.valid && signupForm.controls.username.dirty" name="at" item-left color="primary"></ion-icon>
       <ion-input type="text" placeholder="Username" formControlName="username"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-icon name="mail" item-left color="primary"></ion-icon>
-      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+    <ion-item *ngIf="!signupForm.controls.username.valid  && (signupForm.controls.username.dirty || signupForm.controls.username.touched)">
+      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.required">Please enter a valid username.</p>
+      <p class="invalid-icon" *ngIf="signupForm.controls.username.errors.minlength">Your username must have at least 3 characteres.</p>
     </ion-item>
-    <ion-item>
-      <ion-icon name="lock" item-left color="primary"></ion-icon>
+    
+    <ion-item [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
+      <ion-icon [class.invalid-icon]="!signupForm.controls.email.valid && signupForm.controls.email.dirty" name="mail" item-left color="primary"></ion-icon>
+      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input> 
+    </ion-item>
+    <ion-item *ngIf="!signupForm.controls.email.valid && (signupForm.controls.email.dirty || signupForm.controls.email.touched)">
+      <p class="invalid-icon" *ngIf="!signupForm.controls.email.pending">Please enter a valid email.</p>
+    </ion-item>
+    <!-- <ion-item *ngIf="signupForm.controls.email.pending">
+      <p>Checking email</p>
+    </ion-item> -->
+    
+    <ion-item [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
+      <ion-icon [class.invalid-icon]="!signupForm.controls.password.valid && signupForm.controls.password.dirty" name="lock" item-left color="primary"></ion-icon>
       <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!signupForm.controls.password.valid  && (signupForm.controls.password.dirty || signupForm.controls.password.touched)">
+      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.required">Please enter a valid password.</p>
+      <p class="invalid-icon" *ngIf="signupForm.controls.password.errors.minlength">Your password must have at least 6 characters.</p>
     </ion-item>
     <br>
 

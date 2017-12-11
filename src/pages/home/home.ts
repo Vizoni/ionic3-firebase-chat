@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuController, NavController } from 'ionic-angular';
+import { MenuController, NavController, Loading, LoadingController } from 'ionic-angular';
 
 import { FirebaseListObservable } from 'angularfire2/database';
 
@@ -26,6 +26,7 @@ export class HomePage {
   constructor(
     public authService: AuthService,
     public chatService: ChatService,
+    public loadingCtrl: LoadingController,
     public menuCtrl: MenuController,
     public navCtrl: NavController,
     public userService: UserService,  // injeta o user service
@@ -38,10 +39,14 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+
+    this.showLoading();
+
     this.chats = this.chatService.chats;
     this.users = this.userService.users;
     // o atributo users dessa página é o mesmo q o atributo do user service
     this.menuCtrl.enable(true, 'user-menu'); // habilitar o menu qndo entrar na página home
+    
   }
 
   onSignup(): void {
@@ -119,5 +124,17 @@ export class HomePage {
       }
     }
   }  
+
+  
+  private showLoading(): Loading {
+    let loading: Loading = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 200
+    });
+
+    loading.present();
+
+    return loading;
+  }
 
 }

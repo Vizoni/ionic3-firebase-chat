@@ -13,6 +13,7 @@ import { UserService } from './../../providers/user/user.service';
 // import { User } from '../../models/user.model';
 
 import { HomePage } from './../home/home';
+// import { emailValidator } from '../../validators/email';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,8 @@ import { HomePage } from './../home/home';
 export class SignupPage {
 
   signupForm: FormGroup; // atributo signUpForm ($scope.signUpForm no angular 1) do tipo FormGroup;
-
+  checkingEmail: boolean = true;
+  
   constructor(
     public alertCtrl: AlertController,
     public authService: AuthService,  // service de criação de usuario de autenticação
@@ -33,12 +35,14 @@ export class SignupPage {
     public userService: UserService
   ) {
     // variavel com a expressão regular de validação de e-mail
-    let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    // let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     this.signupForm = this.formBuilder.group({  // definindo os atributos do signupForm (campos)
       // o primeiro item do array é o valor inicial, o segundo é o array de validators
       name: ['', [Validators.required, Validators.minLength(3)]], // o campo name é obrigatório (required) e precisa ter no minimo 3 caracteres
       username: ['', [Validators.required, Validators.minLength(3)]],
+      // email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)]), emailValidator.checkEmail ], // validator tem q ser obrigatório E seguir a expressão regular do emailRegex
       email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)])], // validator tem q ser obrigatório E seguir a expressão regular do emailRegex
       password: ['', [Validators.required, Validators.minLength(6)]],
     });

@@ -78,6 +78,19 @@ export class UserService extends BaseService{
     // return null;
   }
 
+  emailAlreadyInUse(email: string): Observable<boolean> {
+    return this.af.database.list(`/users`, {
+      query: {
+        orderByChild: 'email', // ordena pelo atributo 'username' de cada nó
+        equalTo: email // que seja igual ao username passado
+      }
+    }).map((users: User[]) => { // o retorno é um array do tipo User
+      return users.length > 0;  // se o array de users for maior q 0, retorna TRUE, se não, FALSE
+    }).catch(this.handleObservableError); // tratamento de erro com o método handleObservableError do BaseService
+    
+    // return null;
+  }
+
   getUser(userId: string): FirebaseObjectObservable<User> {
     return <FirebaseObjectObservable<User>>this.af.database.object(`/users/${userId}`)
       .catch(this.handleObservableError);
