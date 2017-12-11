@@ -23,6 +23,4 @@ export class CustomLoggedHeaderComponent extends baseComponent{
     super(alertCtrl,authService,app,menuCtrl);
   }
 
-
-
 }

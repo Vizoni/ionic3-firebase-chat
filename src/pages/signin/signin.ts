@@ -30,7 +30,6 @@ export class SigninPage {
     this.signinForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)])],
       password: ['', [Validators.required, Validators.minLength(6)]]
-
     });
   }
 
